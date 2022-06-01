@@ -6,29 +6,47 @@
 #    By: ddiniz <ddiniz@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 17:32:02 by ddiniz            #+#    #+#              #
-#    Updated: 2022/05/30 18:49:26 by ddiniz           ###   ########.fr        #
+#    Updated: 2022/05/31 20:45:53 by ddiniz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
 
-FILES		= main.c ft_printf.c
+FILES		= ft_printf.c
+OBJECTS		= $(FILES:%.c=%.o)
+
 SRC			= ./src
+TEST		= ./test
+
 INCLUDES	= ./includes
-LIBFT		= libft.a
+LIBFT		= ./libft
+
+NAME_LIBFT	= libft.a
 NAME		= libftprintf.a
 
-all: $(LIBFT)
-	$(CC) $(CFLAGS) -I$(INCLUDES) ./test/main.c ./src/ft_printf.c -L./libft -lft
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(OBJECTS)
+	ar rc $(NAME) $(SRC)/*.o $(LIBFT)/*.o
 
 $(LIBFT):
-	make -C ./libft
+	@make -C $(LIBFT) re
+
+$(OBJECTS): $(SRC)/$(FILES)
+	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT) -c $< -o $(SRC)/$@
+
+program: $(NAME)
+	$(CC) $(CFLAGS) ./test/main.c -lftprintf -I$(INCLUDES) -I$(LIBFT) -L./
 
 clean:
+	rm -rf $(TEST)/*.o
+	@make -C $(LIBFT) clean
 
-fclean:
+fclean: clean
+	rm -rf $(NAME)
+	@make -C $(LIBFT) fclean
 
-re:
+re: fclean all
 
 .PHONY: all fclean clean re
