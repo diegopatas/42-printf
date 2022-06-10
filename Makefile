@@ -6,7 +6,7 @@
 #    By: ddiniz <ddiniz@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 17:32:02 by ddiniz            #+#    #+#              #
-#    Updated: 2022/05/31 20:45:53 by ddiniz           ###   ########.fr        #
+#    Updated: 2022/06/07 18:16:42 by ddiniz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(OBJECTS): $(SRC)/$(FILES)
 	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT) -c $< -o $(SRC)/$@
 
 program: $(NAME)
-	$(CC) $(CFLAGS) ./test/main.c -lftprintf -I$(INCLUDES) -I$(LIBFT) -L./
+	@make -C $(TEST) all
 
 clean:
 	rm -rf $(TEST)/*.o
