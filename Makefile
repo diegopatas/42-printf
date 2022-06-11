@@ -6,47 +6,34 @@
 #    By: ddiniz <ddiniz@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 17:32:02 by ddiniz            #+#    #+#              #
-#    Updated: 2022/06/07 18:16:42 by ddiniz           ###   ########.fr        #
+#    Updated: 2022/06/11 17:50:17 by ddiniz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror
+CC		= gcc
+CFLAGS	= -Wall -Werror -Wextra
 
-FILES		= ft_printf.c
-OBJECTS		= $(FILES:%.c=%.o)
+SRCS	= ft_printf.c ft_strlen.c ft_strchr.c check_char.c ft_itoag.c \
+			print_char.c print_str.c print_nbr.c print_hex.c print_ptr.c \
+			print_base.c
 
-SRC			= ./src
-TEST		= ./test
+OBJS	= $(SRCS:%.c=%.o)
 
-INCLUDES	= ./includes
-LIBFT		= ./libft
-
-NAME_LIBFT	= libft.a
-NAME		= libftprintf.a
+INCLUDES= ft_printf.h
+NAME	= libftprintf.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJECTS)
-	ar rc $(NAME) $(SRC)/*.o $(LIBFT)/*.o
+$(NAME): $(OBJS) $(INCLUDES)
+	ar -rc $(NAME) $(OBJS)
 
-$(LIBFT):
-	@make -C $(LIBFT) re
-
-$(OBJECTS): $(SRC)/$(FILES)
-	$(CC) $(CFLAGS) -I$(INCLUDES) -I$(LIBFT) -c $< -o $(SRC)/$@
-
-program: $(NAME)
-	@make -C $(TEST) all
+%.o: %.c
+	$(CC) $(CFLAGS) -g -c $< -o $@
 
 clean:
-	rm -rf $(TEST)/*.o
-	@make -C $(LIBFT) clean
+	rm -rf $(OBJS)
 
 fclean: clean
-	rm -rf $(NAME)
-	@make -C $(LIBFT) fclean
+	$(RM) $(NAME)
 
 re: fclean all
-
-.PHONY: all fclean clean re
