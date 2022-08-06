@@ -6,7 +6,7 @@
 #    By: ddiniz <ddiniz@student.42sp.org.br>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 17:32:02 by ddiniz            #+#    #+#              #
-#    Updated: 2022/06/11 17:50:17 by ddiniz           ###   ########.fr        #
+#    Updated: 2022/06/11 18:03:55 by ddiniz           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,6 @@ clean:
 	rm -rf $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
